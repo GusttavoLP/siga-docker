@@ -21,7 +21,7 @@ RUN sudo apk --update --no-cache add busybox-extras tzdata git maven
 RUN sudo sh -c "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone"
 
 #--- DOWNLOAD LATEST VERSION FROM GITHUB
-RUN echo "downloading ckeditor.war" && curl -s https://api.github.com/repos/projeto-siga/siga-docker/releases/latest | grep browser_download_url | grep .war | cut -d '"' -f 4 | xargs wget -q
+RUN echo "downloading ckeditor.war" && curl -s https://api.github.com/repos/GusttavoLP/siga-docker/releases/latest | grep browser_download_url | grep .war | cut -d '"' -f 4 | xargs wget -q
 
 #--- DEPLOY DO ARQUIVO .WAR ---
 RUN mv ckeditor.war ${JBOSS_HOME}/standalone/deployments/
@@ -41,7 +41,7 @@ RUN sudo apk add --update --no-cache graphviz ttf-freefont
 #RUN sudo yum -y install graphviz
 
 #--- DOWNLOAD LATEST VERSION FROM GITHUB
-RUN echo "downloading vizservice.war" && curl -s https://api.github.com/repos/projeto-siga/vizservice/releases/latest \
+RUN echo "downloading vizservice.war" && curl -s https://api.github.com/repos/GusttavoLP/vizservice/releases/latest \
   | grep browser_download_url \
   | grep vizservice.war \
   | cut -d '"' -f 4 \
@@ -52,8 +52,8 @@ RUN mv vizservice.war ${JBOSS_HOME}/standalone/deployments/
 
 #--- CLONE FROM BRANCH
 RUN echo 'Clone apartir do branch' ${BRANCH}
-RUN git clone https://github.com/projeto-siga/siga.git -b ${BRANCH}
-ADD https://api.github.com/repos/projeto-siga/siga/commits/${BRANCH}?per_page=1 /tmp/last_commit
+RUN git clone https://github.com/GusttavoLP/siga.git -b ${BRANCH}
+ADD https://api.github.com/repos/GusttavoLP/siga/commits/${BRANCH}?per_page=1 /tmp/last_commit
 RUN cd siga && git pull
 
 #--- BUILD ARTIFACTS
